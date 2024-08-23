@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import NavbarActionButton from "@/components/shared/Navbar";
 import FooterPrimaryDarkTheme from "@/components/shared/Footer";
+import AuthProvider from "@/services/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,9 +15,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className={inter.className} suppressHydrationWarning={true}>
+      <AuthProvider>
         <NavbarActionButton/>
         {children}
         <FooterPrimaryDarkTheme/>
+        </AuthProvider>
         </body>
     </html>
   );
