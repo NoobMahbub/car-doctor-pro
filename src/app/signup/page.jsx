@@ -11,7 +11,17 @@ export default function page() {
       email: event.target.email.value,
       password: event.target.password.value,
     }
-    console.log(newUser)
+    const res = await fetch("http://localhost:3000/signup/api", {
+      method: "POST",
+      body: JSON.stringify(newUser),
+      headers: {
+        "content-type": "application/json"
+      }
+    })
+    // console.log(res)
+    if(res.status === 200){
+      event.target.reset()
+    }
   }
 
   return (
