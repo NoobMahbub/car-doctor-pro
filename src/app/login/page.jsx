@@ -1,8 +1,20 @@
+"use client"
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-
+import { signIn } from 'next-auth/react'
 export default function page() {
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    const res = signIn("credentials", {
+      email,
+      password,
+      redirect: false
+    })
+    console.log(res)
+  }
   return (
     <div className='container mx-auto py-24'>
       <div className='grid grid-cols-2 gap-12'>
@@ -13,16 +25,16 @@ export default function page() {
         {/* <div className='border-2 p-12'> */}
         <div className="mx-auto w-full max-w-md space-y-4 rounded-lg border bg-white p-10 shadow-lg dark:border-zinc-700 dark:bg-zinc-900">
           <h1 className="text-3xl font-semibold">Sign In</h1>
-          <form action="#" className="space-y-6">
+          <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-2 text-sm text-zinc-700 dark:text-zinc-300">
               <label htmlFor="username_2" className="block font-medium">
-                Username
+                Email
               </label>
               <input
                 className="flex h-10 w-full rounded-md border px-3 py-2 text-sm focus:ring-1 focus-visible:outline-none dark:border-zinc-700"
                 id="username_2"
                 placeholder="Enter username"
-                name="username"
+                name="email"
                 type="text"
               />
             </div>
