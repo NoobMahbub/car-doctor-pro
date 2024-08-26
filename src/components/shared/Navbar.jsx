@@ -4,8 +4,11 @@ import Link from "next/link"
 import React, { useState } from "react"
 import Cart from "../Icon/Cart"
 import Search from "../Icon/Search"
+import { signOut, useSession } from "next-auth/react"
 
 export default function NavbarActionButton() {
+    const session = useSession()
+    console.log(session)
     const [isToggleOpen, setIsToggleOpen] = useState(false)
 
     const NavItems = [
@@ -104,9 +107,16 @@ export default function NavbarActionButton() {
                             <button className="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded bg-emerald-500 px-5 text-sm font-medium tracking-wide text-white shadow-md shadow-emerald-200 transition duration-300 hover:bg-emerald-600 hover:shadow-sm hover:shadow-emerald-200 focus:bg-emerald-700 focus:shadow-sm focus:shadow-emerald-200 focus-visible:outline-none disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none">
                                 <span>Appointment</span>
                             </button>
-                            <Link href={"/login"} className="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded bg-emerald-500 px-5 text-sm font-medium tracking-wide text-white shadow-md shadow-emerald-200 transition duration-300 hover:bg-emerald-600 hover:shadow-sm hover:shadow-emerald-200 focus:bg-emerald-700 focus:shadow-sm focus:shadow-emerald-200 focus-visible:outline-none disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none">
-                                <span>Login</span>
-                            </Link>
+
+                            {
+                                session.status === "authenticated" ? <button onClick={()=>signOut()} className="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded bg-red-500 px-5 text-sm font-medium tracking-wide text-white shadow-md shadow-red-200 transition duration-300 hover:bg-red-600 hover:shadow-sm hover:shadow-red-200 focus:bg-red-700 focus:shadow-sm focus:shadow-red-200 focus-visible:outline-none disabled:cursor-not-allowed disabled:border-red-300 disabled:bg-red-300 disabled:shadow-none">
+                                    <span>Logout</span>
+                                </button>
+                                    :
+                                    <Link href={"/login"} className="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded bg-emerald-500 px-5 text-sm font-medium tracking-wide text-white shadow-md shadow-emerald-200 transition duration-300 hover:bg-emerald-600 hover:shadow-sm hover:shadow-emerald-200 focus:bg-emerald-700 focus:shadow-sm focus:shadow-emerald-200 focus-visible:outline-none disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none">
+                                        <span>Login</span>
+                                    </Link>
+                            }
                         </div>
                     </nav>
                 </div>
